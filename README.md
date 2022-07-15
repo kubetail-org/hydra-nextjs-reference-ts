@@ -1,34 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ORY Hydra Next.js Reference Implementation (TypeScript)
 
-## Getting Started
+This is a Next.js app which sets up a OAuth 2.0 and OpenID Connect Provider using [Ory Hydra](https://www.ory.sh/docs/hydra/) as a backend. It has an unstyled UI and doesn't implement user management but can be easily modified to fit into your existing system.
 
-First, run the development server:
+# Features
 
-```bash
-npm run dev
-# or
+  * User login, logout, registration, consent
+  * CSRF protection with [edge-csrf](https://github.com/amorey/edge-csrf)
+  * Super-strict HTTP security headers (configurable)
+  * Client-side JavaScript disabled by default
+  * Unit tests with Jest
+  * E2E tests with Cypress
+  * Start/stop Hydra in development using docker-compose
+  * Easily customizable
+  * Written in TypeScript
+
+## Configuration
+
+This application can be configured using the following environment variables:
+
+| Name                    | Default                |
+| ----------------------- | ---------------------- |
+| SECURITY_HEADERS_ENABLE | false                  |
+| HYDRA_ADMIN_URL         | http://localhost:4445/ |
+
+## Development
+
+To install dependencies:
+
+```sh
+yarn install
+```
+
+To run the Next.js app server in development mode:
+
+```sh
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To start/stop hydra in development you can use the docker-compose file found in the `ory/` directory:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+# start
+docker compose -f ory/docker-compose.yml up -d
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# stop
+docker compose -f ory/docker-compose.yml down
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# stop and remove mounted volumes
+docker compose -f ory/docker-compose.yml down -v
+docker compose -f ory/docker-compose.yml rm -fsv
+```
 
-## Learn More
+## Production
 
-To learn more about Next.js, take a look at the following resources:
+To run the app in production first run the `build` command then run `start`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+yarn build
+yarn start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Testing
 
-## Deploy on Vercel
+To run the unit tests (using Jest):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+yarn test
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To run the E2E tests (using Cypress):
+
+```sh
+yarn build
+yarn test-e2e
+```
