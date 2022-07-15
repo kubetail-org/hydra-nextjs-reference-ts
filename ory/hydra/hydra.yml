@@ -13,9 +13,9 @@ serve:
 urls:
   self:
     issuer: http://localhost:4444
-  consent: http://localhost:3000/auth/consent
-  login: http://localhost:3000/auth/sign-in
-  logout: http://localhost:3000/auth/sign-out
+  consent: http://localhost:3000/consent
+  login: http://localhost:3000/sign-in
+  logout: http://localhost:3000/sign-out
 
 secrets:
   system:
