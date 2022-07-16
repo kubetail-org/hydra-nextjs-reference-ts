@@ -164,7 +164,7 @@ const SignUp: React.FunctionComponent<Props> = ({
       {'Or'}
       <br />
       <br />
-      <div><a href={action.replace(/^\/auth\/sign-up/, '/auth/sign-in')}>Sign into your account &raquo;</a></div>
+      <div><a href={action.replace(/^\/sign-up/, '/sign-in')}>Sign into your account &raquo;</a></div>
     </>
   )
 }
